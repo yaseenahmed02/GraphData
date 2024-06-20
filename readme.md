@@ -91,10 +91,6 @@ To generate random graphs and analyze them, run the `random_graph_generator.py` 
 
 - **Definition**: The average number of edges connected to each node.
 - **Explanation**: This is calculated by taking the total number of edges connected to all nodes and dividing by the number of nodes. It gives an idea of how connected the graph is on average.
-- **Formula**:
-  \[
-  \text{Average Degree} = \frac{\sum \text{degree of all nodes}}{\text{number of nodes}}
-  \]
 
 ### Average Clustering Coefficient
 
