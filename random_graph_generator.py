@@ -1,8 +1,8 @@
+import os
 import networkx as nx
 import numpy as np
 import json
 import random
-import matplotlib.pyplot as plt
 from pprint import pprint
 
 
@@ -28,23 +28,60 @@ def load_from_json(file_name):
     return graphs
 
 
-def plot_graph(G, title="Graph"):
-    plt.figure(figsize=(8, 8))
-    nx.draw(
-        G,
-        node_size=700,
-        node_color="lightblue",
-        with_labels=True,
-        font_weight="bold",
-        edge_color="black",
-    )
-    plt.title(title)
-    plt.show()
+def generate_degree_descriptions(G):
+    descriptions = []
+    for node, degree in dict(G.degree()).items():
+        neighbors = list(G.neighbors(node))
+        neighbor_str = ", ".join(map(lambda x: f"Node {x+1}", neighbors))
+        descriptions.append(f"Node {node+1} has {degree} connections: {neighbor_str}.")
+    return descriptions
 
 
-def plot_random_graph(n, p, directed=False, title="Random Graph"):
-    G = nx.gnp_random_graph(n, p, directed=directed)
-    plot_graph(G, title)
+def generate_neighborhood_descriptions(G):
+    descriptions = []
+    for node in G.nodes():
+        neighbors = list(G.neighbors(node))
+        descriptions.append(
+            f"Node {node+1} is adjacent to nodes {', '.join(map(lambda x: str(x+1), neighbors))}."
+        )
+    return descriptions
+
+
+def generate_shortest_path_descriptions(G):
+    descriptions = []
+    for source in G.nodes():
+        for target in G.nodes():
+            if source != target:
+                try:
+                    path = nx.shortest_path(G, source=source, target=target)
+                    path_desc = " -> ".join(map(lambda x: str(x + 1), path))
+                    descriptions.append(
+                        f"The shortest path from node {source+1} to node {target+1} is through nodes {path_desc}."
+                    )
+                except nx.NetworkXNoPath:
+                    descriptions.append(
+                        f"There is no path from node {source+1} to node {target+1}."
+                    )
+    return descriptions
+
+
+def generate_component_descriptions(G):
+    descriptions = []
+    for component in nx.connected_components(G):
+        descriptions.append(
+            f"Nodes {', '.join(map(lambda x: str(x+1), component))} form a connected component."
+        )
+    return descriptions
+
+
+def generate_connection_descriptions(G):
+    descriptions = []
+    for node in G.nodes():
+        neighbors = list(G.neighbors(node))
+        descriptions.append(
+            f"Node {node+1} is connected to nodes {', '.join(map(lambda x: str(x+1), neighbors))}."
+        )
+    return descriptions
 
 
 def get_graph_properties(G):
@@ -63,43 +100,17 @@ def get_graph_properties(G):
     return properties
 
 
-def analyze_graphs(graphs):
-    all_properties = []
-    for idx, adj_matrix in enumerate(graphs):
-        G = nx.from_numpy_array(np.array(adj_matrix))
-        properties = get_graph_properties(G)
-        all_properties.append(properties)
-        print(f"\nGraph {idx + 1} properties:")
-        pprint(properties)
-        print(f"Adjacency Matrix for Graph {idx + 1}:")
-        print(np.array(adj_matrix))
-    return all_properties
+def save_graph_data(graph_idx, adj_matrix, descriptions, properties, base_dir="GDL"):
+    os.makedirs(base_dir, exist_ok=True)
 
-
-def summarize_properties(all_properties):
-    summary = {
-        "total_graphs": len(all_properties),
-        "average_nodes": np.mean([prop["number_of_nodes"] for prop in all_properties]),
-        "average_edges": np.mean([prop["number_of_edges"] for prop in all_properties]),
-        "average_degree": np.mean([prop["average_degree"] for prop in all_properties]),
-        "average_clustering_coefficient": np.mean(
-            [prop["average_clustering_coefficient"] for prop in all_properties]
-        ),
-        "connected_graphs": sum(
-            1 for prop in all_properties if prop["diameter"] != "Graph is not connected"
-        ),
-        "average_diameter_of_connected_graphs": np.mean(
-            [
-                prop["diameter"]
-                for prop in all_properties
-                if prop["diameter"] != "Graph is not connected"
-            ]
-        ),
-        "average_connected_components": np.mean(
-            [prop["number_of_connected_components"] for prop in all_properties]
-        ),
+    graph_data = {
+        "adjacency_matrix": adj_matrix,
+        "properties": properties,
+        "descriptions": descriptions,
     }
-    return summary
+
+    with open(os.path.join(base_dir, f"graph_{graph_idx+1}.json"), "w") as f:
+        json.dump(graph_data, f, indent=4)
 
 
 def main():
@@ -114,26 +125,21 @@ def main():
     graphs = load_from_json("random_graphs.json")
     print(f"Loaded {len(graphs)} random graphs from 'random_graphs.json'")
 
-    # Analyze the generated graphs
-    all_properties = analyze_graphs(graphs)
+    # Analyze and describe the generated graphs
+    for idx, adj_matrix in enumerate(graphs):
+        G = nx.from_numpy_array(np.array(adj_matrix))
+        properties = get_graph_properties(G)
 
-    # Summarize properties of all graphs
-    summary = summarize_properties(all_properties)
-    print("\nSummary of all graph properties:")
-    pprint(summary)
+        descriptions = {
+            "degree_descriptions": generate_degree_descriptions(G),
+            "neighborhood_descriptions": generate_neighborhood_descriptions(G),
+            "shortest_path_descriptions": generate_shortest_path_descriptions(G),
+            "component_descriptions": generate_component_descriptions(G),
+            "connection_descriptions": generate_connection_descriptions(G),
+        }
 
-    # Plot a simple undirected graph with 5 nodes
-    # plot_random_graph(n=5, p=0.5, directed=False, title="Undirected Erdős-Rényi Random Graph with 5 Nodes")
-
-    # Plot a simple directed graph with 5 nodes
-    # plot_random_graph(n=5, p=0.5, directed=True, title="Directed Erdős-Rényi Random Graph with 5 Nodes")
-
-    # Generate and analyze a specific graph
-    # G = nx.erdos_renyi_graph(10, 0.3)
-    # plot_graph(G, title="Specific Erdős-Rényi Graph with 10 Nodes and p=0.3")
-    # properties = get_graph_properties(G)
-    # print("Graph properties:")
-    # pprint(properties)
+        save_graph_data(idx, adj_matrix, descriptions, properties)
+        print(f"Saved data for graph {idx + 1}")
 
 
 if __name__ == "__main__":

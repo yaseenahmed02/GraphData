@@ -1,0 +1,22 @@
+Degree descriptions
+- Node 1 has 2 connections: node 2, node 3
+- node 2 has 1 connection: node 1
+
+
+Neighborhood descriptions
+- node 1 is adjacent to nodes 2, 3
+node 2 is adjacent to node 1
+node 3 is adjacent to node 1
+
+
+shortest path descriptions:
+the shortest path from node 1 to node 2 is through nodes 1->2
+the shortest path from node 1 to node 3 is through nodes 1 -> 4 ->3
+
+component descriptions
+- nodes 1, 2, and 3 form a connected component
+- nodes 4, 1, and 3 form a connected component
+
+connection descrpitions:
+- node 1 is connected to nodes 2, 3
+- node 2 is connected to node 1
