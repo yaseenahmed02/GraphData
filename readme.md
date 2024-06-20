@@ -1,6 +1,8 @@
+Here is the updated README file, including information about the type of data being generated and the graph description language text.
+
 # GraphData
 
-This repository contains a script to generate random graphs using the Erdős-Rényi model and analyze their properties. The script can generate random graphs of different sizes, save them as adjacency matrices in JSON format, and provide various statistics about the generated graphs.
+This repository contains a script to generate random graphs using the Erdős-Rényi model and analyze their properties. The script can generate random graphs of different sizes, save them as adjacency matrices in JSON format, and provide various statistics and descriptions about the generated graphs.
 
 ## Table of Contents
 
@@ -18,11 +20,17 @@ This repository contains a script to generate random graphs using the Erdős-Ré
     - [Average Clustering Coefficient](#average-clustering-coefficient)
     - [Diameter](#diameter)
     - [Number of Connected Components](#number-of-connected-components)
+  - [Generated Graph Descriptions](#generated-graph-descriptions)
+    - [Degree Descriptions](#degree-descriptions)
+    - [Neighborhood Descriptions](#neighborhood-descriptions)
+    - [Shortest Path Descriptions](#shortest-path-descriptions)
+    - [Component Descriptions](#component-descriptions)
+    - [Connection Descriptions](#connection-descriptions)
   - [License](#license)
 
 ## Description
 
-The script in this repository generates random graphs with a specified range of sizes using the Erdős-Rényi model. It saves these graphs as adjacency matrices in a JSON file and provides detailed analysis of each graph's properties, such as the number of nodes, number of edges, average degree, average clustering coefficient, diameter, and number of connected components.
+The script in this repository generates random graphs with a specified range of sizes using the Erdős-Rényi model. It saves these graphs as adjacency matrices in a JSON file and provides detailed analysis of each graph's properties, such as the number of nodes, number of edges, average degree, average clustering coefficient, diameter, and number of connected components. Additionally, the script generates descriptive text for various graph properties, including degree descriptions, neighborhood descriptions, shortest path descriptions, component descriptions, and connection descriptions.
 
 ## Setup
 
@@ -65,7 +73,7 @@ To generate random graphs and analyze them, run the `random_graph_generator.py` 
    python random_graph_generator.py
    ```
 
-2. The script will output the properties of each graph and their adjacency matrices. It will also provide a summary of all graph properties.
+2. The script will output the properties of each graph and their adjacency matrices. It will also provide a summary of all graph properties and save descriptive texts for each graph.
 
 ## Explanation of Graph Properties
 
@@ -104,6 +112,33 @@ To generate random graphs and analyze them, run the `random_graph_generator.py` 
 
 - **Definition**: The number of subgraphs in which any two nodes are connected to each other by paths.
 - **Explanation**: This tells you how many separate groups of connected nodes exist within the graph. Each group is a connected component. If there is only one component, the entire graph is connected.
+
+## Generated Graph Descriptions
+
+### Degree Descriptions
+
+- **Definition**: Describes the degree (number of connections) of each node and its neighbors.
+- **Example**: "Node 1 has 3 connections: Node 2, Node 3, Node 4."
+
+### Neighborhood Descriptions
+
+- **Definition**: Lists the neighbors of each node.
+- **Example**: "Node 1 is adjacent to nodes 2, 3, 4."
+
+### Shortest Path Descriptions
+
+- **Definition**: Describes the shortest path between every pair of nodes.
+- **Example**: "The shortest path from node 1 to node 4 is through nodes 1 -> 3 -> 4."
+
+### Component Descriptions
+
+- **Definition**: Lists the nodes in each connected component.
+- **Example**: "Nodes 1, 2, 3, 4 form a connected component."
+
+### Connection Descriptions
+
+- **Definition**: Describes the direct connections of each node.
+- **Example**: "Node 1 is connected to nodes 2, 3, 4."
 
 ## License
 
