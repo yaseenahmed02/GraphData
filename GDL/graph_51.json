@@ -1,73 +1,42 @@
 {
     "adjacency_matrix": [
         [
-            0,
-            1,
-            1,
-            1
+            0.0,
+            0.0
         ],
         [
-            1,
-            0,
-            1,
-            1
-        ],
-        [
-            1,
-            1,
-            0,
-            1
-        ],
-        [
-            1,
-            1,
-            1,
-            0
+            0.0,
+            0.0
         ]
     ],
     "properties": {
-        "number_of_nodes": 4,
-        "number_of_edges": 6,
-        "average_degree": 3.0,
-        "average_clustering_coefficient": 1.0,
-        "diameter": 1,
-        "number_of_connected_components": 1
+        "number_of_nodes": 2,
+        "number_of_edges": 0,
+        "average_degree": 0.0,
+        "average_clustering_coefficient": 0.0,
+        "diameter": "Graph is not connected",
+        "number_of_connected_components": 2
     },
     "descriptions": {
         "degree_descriptions": [
-            "Node 1 has 3 connections: Node 2, Node 3, Node 4.",
-            "Node 2 has 3 connections: Node 1, Node 3, Node 4.",
-            "Node 3 has 3 connections: Node 1, Node 2, Node 4.",
-            "Node 4 has 3 connections: Node 1, Node 2, Node 3."
+            "Node 1 has 0 connections: .",
+            "Node 2 has 0 connections: ."
         ],
         "neighborhood_descriptions": [
-            "Node 1 is adjacent to nodes 2, 3, 4.",
-            "Node 2 is adjacent to nodes 1, 3, 4.",
-            "Node 3 is adjacent to nodes 1, 2, 4.",
-            "Node 4 is adjacent to nodes 1, 2, 3."
+            "Node 1 is adjacent to nodes .",
+            "Node 2 is adjacent to nodes ."
         ],
         "shortest_path_descriptions": [
-            "The shortest path from node 1 to node 2 is through nodes 1 -> 2.",
-            "The shortest path from node 1 to node 3 is through nodes 1 -> 3.",
-            "The shortest path from node 1 to node 4 is through nodes 1 -> 4.",
-            "The shortest path from node 2 to node 1 is through nodes 2 -> 1.",
-            "The shortest path from node 2 to node 3 is through nodes 2 -> 3.",
-            "The shortest path from node 2 to node 4 is through nodes 2 -> 4.",
-            "The shortest path from node 3 to node 1 is through nodes 3 -> 1.",
-            "The shortest path from node 3 to node 2 is through nodes 3 -> 2.",
-            "The shortest path from node 3 to node 4 is through nodes 3 -> 4.",
-            "The shortest path from node 4 to node 1 is through nodes 4 -> 1.",
-            "The shortest path from node 4 to node 2 is through nodes 4 -> 2.",
-            "The shortest path from node 4 to node 3 is through nodes 4 -> 3."
+            "There is no path from node 1 to node 2.",
+            "There is no path from node 2 to node 1."
         ],
         "component_descriptions": [
-            "Nodes 1, 2, 3, 4 form a connected component."
+            "Nodes 1 form a connected component.",
+            "Nodes 2 form a connected component."
         ],
         "connection_descriptions": [
-            "Node 1 is connected to nodes 2, 3, 4.",
-            "Node 2 is connected to nodes 1, 3, 4.",
-            "Node 3 is connected to nodes 1, 2, 4.",
-            "Node 4 is connected to nodes 1, 2, 3."
+            "Node 1 is connected to nodes .",
+            "Node 2 is connected to nodes ."
         ]
     }
 }
