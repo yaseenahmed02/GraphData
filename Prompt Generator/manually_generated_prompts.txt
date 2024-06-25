@@ -1,0 +1,39 @@
+1. You are given a graph description language <GDL>. Explain the overall structure and key features of the graph in simple terms.
+
+2. Given the graph description language <GDL>, summarize the main points and connections in the graph as if you were explaining it to a friend over coffee.
+
+3. Using the graph description language <GDL>, provide a brief overview of the graph's layout and connections without using technical jargon.
+
+4. You have a graph description language <GDL>. Imagine you are writing a short article for a general audience. Describe the graph and its components in a way that is easy to understand.
+
+5. With the graph description language <GDL> provided, explain the most important aspects of the graph as if you were teaching a middle school student.
+
+6. Given the graph description language <GDL>, create a simple story or analogy that helps illustrate the connections and relationships in the graph.
+
+7. Using the graph description language <GDL>, describe the graph in a conversational style, highlighting interesting patterns or features without getting too technical.
+
+8. Imagine you are a tour guide explaining the graph described by the language <GDL> to visitors. Give a clear and engaging explanation of what the graph represents.
+
+9. Given the graph description language <GDL>, explain how the nodes and their connections relate to each other in a way that someone with no background in graph theory could understand.
+
+10. Using the graph description language <GDL>, describe the graph as if you were explaining it to someone who is completely new to the concept of graphs. Focus on making the explanation clear and approachable.
+
+11. You are given a graph description language <GDL>. Break down the graph into its fundamental components and explain each part in simple terms.
+
+12. With the graph description language <GDL>, provide an easy-to-follow explanation of the relationships and connections within the graph, suitable for a layperson.
+
+13. Using the graph description language <GDL>, explain the graph's structure and connections in a way that a beginner could understand.
+
+14. Imagine you are explaining the graph described by the language <GDL> to someone who is not familiar with graphs. Highlight the main points and keep the explanation simple.
+
+15. Given the graph description language <GDL>, describe the graph's overall pattern and connectivity as if you were explaining it to a child.
+
+16. Using the graph description language <GDL>, create a high-level summary of the graph that avoids technical details and focuses on the big picture.
+
+17. You have a graph description language <GDL>. Explain the connections and relationships in the graph in a straightforward manner, suitable for someone without a technical background.
+
+18. With the graph description language <GDL>, describe the graph's nodes and their connections using everyday language and simple examples.
+
+19. Using the graph description language <GDL>, provide a step-by-step explanation of how the nodes in the graph are connected, making it easy for a novice to understand.
+
+20. Imagine you are writing a blog post for a general audience using the graph description language <GDL>. Describe the graph in an engaging and easy-to-understand way, avoiding technical terminology.
