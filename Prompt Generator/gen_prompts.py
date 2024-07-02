@@ -183,8 +183,8 @@ def save_top_prompts(template_name, prompts, mean_similarities, top_n=50):
 
 
 def main():
-    num_prompts_per_template = 10
-    top_n = 10
+    num_prompts_per_template = 500
+    top_n = 50
 
     for template, template_name in zip(prompts_list, prompt_names):
         print(f"Generating prompts for template: {template_name}")
