@@ -11,8 +11,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-
-prompts = [
+prompts_list = [
     prompt_easy,
     prompt_expert,
     prompt_political,
@@ -30,6 +29,23 @@ prompts = [
     prompt_supplychain
 ]
 
+prompt_names = [
+    "easy",
+    "expert",
+    "political",
+    "social",
+    "incident",
+    "friendship",
+    "coauthor",
+    "fiction",
+    "research",
+    "transport",
+    "ecosystem",
+    "corporate",
+    "telecom",
+    "family",
+    "supplychain"
+]
 
 openai.api_key = os.getenv("OPENAI_API_KEY")
 client = OpenAI()
@@ -40,19 +56,20 @@ headers = {
 }
 
 
-def generate_prompts(batch_size=50):
+def generate_prompts(template_prompt, num_prompts):
     """
     generates a list of prompts using the openai api.
 
     args:
-        batch_size (int): number of prompts to generate in each batch.
+        template_prompt (str): the base prompt to use for generating new prompts.
+        num_prompts (int): number of prompts to generate.
 
     returns:
         list: a list of generated prompts.
     """
     prompts = []
-    for i in range(batch_size):
-        print(f"Generating prompt {i+1}/{batch_size}...")
+    for i in range(num_prompts):
+        print(f"Generating prompt {i+1}/{num_prompts}...")
         payload = {
             "model": "gpt-4o",
             "messages": [
@@ -61,7 +78,7 @@ def generate_prompts(batch_size=50):
                     "content": "You are a prompt engineer tasked with generating prompts for explaining graphs described by a Graph Description Language (GDL). "
                                "Ensure the prompt includes a placeholder <GDL> and guides the model to explain the graph in an easy-to-understand manner."
                 },
-                {"role": "user", "content": prompt_easy},
+                {"role": "user", "content": template_prompt},
             ],
             "max_tokens": 500,  # ensures detailed prompts without cutting off information
             "temperature": 0.8,  # encourages creative and diverse responses
@@ -115,13 +132,9 @@ def get_embedding(text, model="text-embedding-3-small"):
     returns:
         list: the embedding vector for the text.
     """
-
-    # Print first 60 characters for brevity
     print(f"Getting embedding for text: {text[:60]}...")
-
     response = client.embeddings.create(
         input=[text], model=model).data[0].embedding
-
     print(f"Received embedding of length {len(response)}")
     return response
 
@@ -138,39 +151,51 @@ def evaluate_prompts(prompts):
     """
     print("Evaluating prompts...")
     embeddings = [get_embedding(prompt) for prompt in prompts]
-
     similarity_matrix = cosine_similarity(embeddings)
-
     mean_similarities = similarity_matrix.mean(axis=1)
-
     print("Evaluation completed.")
     return mean_similarities
 
 
-def main():
-    num_batches = 10
-    batch_size = 20
-    all_prompts = []
+def save_top_prompts(template_name, prompts, mean_similarities, top_n=50):
+    """
+    saves the top N prompts based on mean similarity scores to a file.
 
-    print(f"Starting generation of {num_batches * batch_size} prompts...")
-    for batch_num in range(num_batches):
-        print(f"Generating batch {batch_num + 1}/{num_batches}...")
-        prompts = generate_prompts(batch_size)
-        all_prompts.extend(prompts)
-
-    print("All prompts generated. Starting evaluation...")
-    mean_similarities = evaluate_prompts(all_prompts)
-
-    print("Sorting prompts based on mean similarity...")
+    args:
+        template_name (str): the name of the template to use for naming the file.
+        prompts (list): the list of generated prompts.
+        mean_similarities (list): the mean similarity scores for the prompts.
+        top_n (int): the number of top prompts to save.
+    """
+    print(f"Sorting prompts based on mean similarity for {template_name}...")
     sorted_indices = np.argsort(mean_similarities)[::-1]
-    top_prompts = [all_prompts[i] for i in sorted_indices[:50]]
+    top_prompts = [prompts[i] for i in sorted_indices[:top_n]]
 
-    print("Saving top 50 prompts to 'top_generated_prompts.txt'...")
-    with open('top_generated_prompts.txt', 'w') as file:
+    if not os.path.exists('top_prompts'):
+        os.makedirs('top_prompts')
+
+    file_path = os.path.join('top_prompts', f'{template_name}_prompts.txt')
+    print(f"Saving top {top_n} prompts to '{file_path}'...")
+    with open(file_path, 'w') as file:
         for prompt in top_prompts:
             file.write(f"{prompt}\n")
+    print(f"Top {top_n} prompts saved to '{file_path}'")
 
-    print("Top 50 prompts saved to 'top_generated_prompts.txt'")
+
+def main():
+    num_prompts_per_template = 10
+    top_n = 10
+
+    for template, template_name in zip(prompts_list, prompt_names):
+        print(f"Generating prompts for template: {template_name}")
+        generated_prompts = generate_prompts(
+            template, num_prompts_per_template)
+
+        print(f"Evaluating prompts for template: {template_name}")
+        mean_similarities = evaluate_prompts(generated_prompts)
+
+        save_top_prompts(template_name, generated_prompts,
+                         mean_similarities, top_n)
 
 
 if __name__ == "__main__":
