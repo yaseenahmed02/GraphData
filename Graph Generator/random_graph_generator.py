@@ -33,7 +33,8 @@ def generate_degree_descriptions(G):
     for node, degree in dict(G.degree()).items():
         neighbors = list(G.neighbors(node))
         neighbor_str = ", ".join(map(lambda x: f"Node {x+1}", neighbors))
-        descriptions.append(f"Node {node+1} has {degree} connections: {neighbor_str}.")
+        descriptions.append(
+            f"Node {node+1} has {degree} connections: {neighbor_str}.")
     return descriptions
 
 

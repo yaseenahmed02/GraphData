@@ -1,4 +1,8 @@
-networkx
+openai
 numpy
 scipy
+scikit-learn
 matplotlib
+networkx
+requests
+python-dotenv
